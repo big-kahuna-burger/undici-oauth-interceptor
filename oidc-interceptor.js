@@ -25,7 +25,7 @@ function getTokenState (token) {
 }
 
 function createOidcInterceptor (options) {
-  const { refreshToken, clientSecret, contentType } = options
+  const { refreshToken, clientSecret, contentType, scope = [] } = options
   let {
     accessToken,
     retryOnStatusCodes,
@@ -57,7 +57,7 @@ function createOidcInterceptor (options) {
   function callRefreshToken () {
     if (_requestingRefresh) return _requestingRefresh
 
-    _requestingRefresh = refreshAccessToken({ idpTokenUrl, refreshToken, clientId, clientSecret, contentType })
+    _requestingRefresh = refreshAccessToken({ idpTokenUrl, refreshToken, clientId, clientSecret, contentType, scope })
       .finally(() => _requestingRefresh = null)
 
     return _requestingRefresh
